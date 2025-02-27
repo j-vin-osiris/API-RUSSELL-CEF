@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const Reservation = require("../models/Reservation");
+const auth = require("../middleware/auth");
 
 // GET /catways/:id/reservations
-router.get("/:id/reservations", async (req, res) => {
+router.get("/:id/reservations", auth, async (req, res) => {
   try {
     const reservations = await Reservation.find({
       catwayNumber: req.params.id,
@@ -16,7 +17,7 @@ router.get("/:id/reservations", async (req, res) => {
 });
 
 // GET /catways/:id/reservations/:idReservation
-router.get("/:id/reservations/:idReservation", async (req, res) => {
+router.get("/:id/reservations/:idReservation", auth, async (req, res) => {
   try {
     const reservation = await Reservation.findOne({
       _id: req.params.idReservation,
@@ -32,7 +33,7 @@ router.get("/:id/reservations/:idReservation", async (req, res) => {
 });
 
 // POST /catways/:id/reservations
-router.post("/:id/reservations", async (req, res) => {
+router.post("/:id/reservations", auth, async (req, res) => {
   const { clientName, boatName, startDate, endDate } = req.body;
 
   try {
@@ -52,7 +53,7 @@ router.post("/:id/reservations", async (req, res) => {
 });
 
 // PUT /catways/:id/reservations/:idReservation
-router.put("/:id/reservations/:idReservation", async (req, res) => {
+router.put("/:id/reservations/:idReservation", auth, async (req, res) => {
   const { clientName, boatName, startDate, endDate } = req.body;
 
   try {
@@ -74,7 +75,7 @@ router.put("/:id/reservations/:idReservation", async (req, res) => {
 });
 
 // DELETE /catways/:id/reservations/:idReservation
-router.delete("/:id/reservations/:idReservation", async (req, res) => {
+router.delete("/:id/reservations/:idReservation", auth, async (req, res) => {
   try {
     let reservation = await Reservation.findOneAndDelete({
       _id: req.params.idReservation,
