@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Catway = require("../models/Catway");
-const auth = require("../middlewares/auth");
+const auth = require("../middleware/auth");
 
 // GET /catways
 router.get("/", auth, async (req, res) => {

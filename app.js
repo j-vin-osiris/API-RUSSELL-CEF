@@ -10,6 +10,7 @@ app.use(express.json());
 // Routes
 app.use("/api/catways", require("./routes/catways"));
 app.use("/api", require("./routes/reservations"));
+app.use("/api/users", require("./routes/users"));
 
 app.get("/", (req, res) => {
   res.send("API running");
