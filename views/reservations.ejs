@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestion des Réservations</title>
+  </head>
+  <body>
+    <h1>Réservations pour le Catway <%= catwayNumber %></h1>
+
+    <!-- Liste des réservations -->
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Nom du Client</th>
+          <th>Nom du Bateau</th>
+          <th>Date de Début</th>
+          <th>Date de Fin</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (reservations.length > 0) { %> <% reservations.forEach(reservation
+        => { %>
+        <tr>
+          <td><%= reservation.clientName %></td>
+          <td><%= reservation.boatName %></td>
+          <td><%= reservation.startDate.toDateString() %></td>
+          <td><%= reservation.endDate.toDateString() %></td>
+          <td>
+            <a
+              href="/catways/<%= catwayNumber %>/reservations/<%= reservation._id %>/edit"
+              >Modifier</a
+            >
+            <form
+              action="/catways/<%= catwayNumber %>/reservations/<%= reservation._id %>?_method=DELETE"
+              method="POST"
+              style="display: inline"
+            >
+              <button type="submit">Supprimer</button>
+            </form>
+          </td>
+        </tr>
+        <% }); %> <% } else { %>
+        <tr>
+          <td colspan="5">Aucune réservation trouvée.</td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+
+    <!-- Formulaire pour ajouter une nouvelle réservation -->
+    <h2>Ajouter une Réservation</h2>
+    <form action="/catways/<%= catwayNumber %>/reservations" method="POST">
+      <div>
+        <label for="clientName">Nom du Client :</label>
+        <input type="text" id="clientName" name="clientName" required />
+      </div>
+      <div>
+        <label for="boatName">Nom du Bateau :</label>
+        <input type="text" id="boatName" name="boatName" required />
+      </div>
+      <div>
+        <label for="startDate">Date de Début :</label>
+        <input type="date" id="startDate" name="startDate" required />
+      </div>
+      <div>
+        <label for="endDate">Date de Fin :</label>
+        <input type="date" id="endDate" name="endDate" required />
+      </div>
+      <button type="submit">Ajouter</button>
+    </form>
+
+    <a href="/catways">Retour à la gestion des Catways</a>
+  </body>
+</html>

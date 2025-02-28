@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestion des Catways</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <h1>Gestion des Catways</h1>
+
+    <!-- Bouton pour ajouter un nouveau catway -->
+    <button onclick="window.location.href='/catways/create'">
+      Ajouter un Catway
+    </button>
+
+    <!-- Liste des catways -->
+    <table>
+      <thead>
+        <tr>
+          <th>Numéro</th>
+          <th>Type</th>
+          <th>État</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% catways.forEach(catway => { %>
+        <tr>
+          <td><%= catway.catwayNumber %></td>
+          <td><%= catway.catwayType %></td>
+          <td><%= catway.catwayState %></td>
+          <td>
+            <button
+              onclick="window.location.href='/catways/<%= catway.catwayNumber %>/edit'"
+            >
+              Modifier
+            </button>
+            <form
+              action="/catways/<%= catway.catwayNumber %>?_method=DELETE"
+              method="POST"
+              style="display: inline"
+            >
+              <button type="submit">Supprimer</button>
+            </form>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+
+    <!-- Lien pour revenir au tableau de bord -->
+    <a href="/dashboard">Retour au tableau de bord</a>
+  </body>
+</html>
