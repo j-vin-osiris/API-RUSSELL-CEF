@@ -1,13 +1,26 @@
 const express = require("express");
 const router = express.Router();
 const catwayController = require("../controllers/catwaysController");
-const auth = require("../middlewares/auth"); // Middleware d'authentification
 
-// Routes pour les opérations CRUD sur les catways
-router.get("/", auth, catwayController.getAllCatways); // Lister tous les catways
-router.get("/:id", auth, catwayController.getCatwayById); // Récupérer un catway par ID
-router.post("/", auth, catwayController.createCatway); // Créer un nouveau catway
-router.put("/:id", auth, catwayController.updateCatway); // Modifier l'état d'un catway
-router.delete("/:id", auth, catwayController.deleteCatway); // Supprimer un catway
+// Liste de tous les catways
+router.get("/", catwayController.getAllCatways);
+
+// Créer un nouveau catway
+router.get("/add", (req, res) => {
+  res.render("addCatway"); // Page pour le formulaire d'ajout
+});
+router.post("/", catwayController.createCatway);
+
+// Détails d'un catway spécifique
+router.get("/:id", catwayController.getCatwayById);
+
+// Modifier un catway
+router.get("/:id/edit", (req, res) => {
+  res.render("editCatway"); // Page pour le formulaire d'édition
+});
+router.put("/:id", catwayController.updateCatway);
+
+// Supprimer un catway
+router.delete("/:id", catwayController.deleteCatway);
 
 module.exports = router;
