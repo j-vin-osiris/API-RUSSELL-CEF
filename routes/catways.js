@@ -1,73 +1,21 @@
 const express = require("express");
 const router = express.Router();
-const Catway = require("../models/Catway");
-const auth = require("../middleware/auth");
+const auth = require("../middlewares/auth"); // Importer le middleware d'authentification
+const catwayController = require("../controllers/catwaysController"); // Importer les contrôleurs
 
-// GET /catways
-router.get("/", auth, async (req, res) => {
-  try {
-    const catways = await Catway.find();
-    res.json(catways);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server error");
-  }
-});
+// Route pour obtenir tous les catways (protégée)
+router.get("/", auth, catwayController.getAllCatways);
 
-// GET /catways/:id
-router.get("/:id", auth, async (req, res) => {
-  try {
-    const catway = await Catway.findOne({ catwayNumber: req.params.id });
-    if (!catway) return res.status(404).json({ msg: "Catway not found" });
-    res.json(catway);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server error");
-  }
-});
+// Route pour obtenir un catway spécifique (protégée)
+router.get("/:id", auth, catwayController.getCatwayById);
 
-// POST /catways
-router.post("/", auth, async (req, res) => {
-  const { catwayNumber, catwayType, catwayState } = req.body;
+// Route pour créer un catway (protégée)
+router.post("/", auth, catwayController.createCatway);
 
-  try {
-    let catway = new Catway({ catwayNumber, catwayType, catwayState });
-    await catway.save();
-    res.json(catway);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server error");
-  }
-});
+// Route pour mettre à jour un catway (protégée)
+router.put("/:id", auth, catwayController.updateCatway);
 
-// PUT /catways/:id
-router.put("/:id", auth, async (req, res) => {
-  const { catwayState } = req.body;
-
-  try {
-    let catway = await Catway.findOneAndUpdate(
-      { catwayNumber: req.params.id },
-      { catwayState },
-      { new: true }
-    );
-    if (!catway) return res.status(404).json({ msg: "Catway not found" });
-    res.json(catway);
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server error");
-  }
-});
-
-// DELETE /catways/:id
-router.delete("/:id", auth, async (req, res) => {
-  try {
-    let catway = await Catway.findOneAndDelete({ catwayNumber: req.params.id });
-    if (!catway) return res.status(404).json({ msg: "Catway not found" });
-    res.json({ msg: "Catway deleted" });
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server error");
-  }
-});
+// Route pour supprimer un catway (protégée)
+router.delete("/:id", auth, catwayController.deleteCatway);
 
 module.exports = router;
