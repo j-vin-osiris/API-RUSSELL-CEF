@@ -1,27 +1,20 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const connectDB = require("./config/db");
 const methodOverride = require("method-override");
 const cookieParser = require("cookie-parser");
-const dotenv = require("dotenv");
+
 const path = require("path");
 
 // Charger les variables d'environnement
 dotenv.config();
-
+connectDB();
 const app = express();
-
-// Connexion à la base de données MongoDB
-mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("MongoDB connecté..."))
-  .catch((err) => console.error(err));
 
 // Middlewares
 app.use(express.json());
-app.use(express.urlencoded({ extended: false })); // Pour les formulaires HTML
+app.use(express.urlencoded({ extended: true })); // Pour les formulaires HTML
 app.use(methodOverride("_method")); // Pour supporter PUT et DELETE dans les formulaires
 app.use(cookieParser()); // Pour gérer les cookies
 
@@ -33,19 +26,27 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 
 // Importer les fichiers de routes
+const authLoginRoutes = require("./routes/authLogin");
+const authRegisterRoutes = require("./routes/authRegister");
+const dashboardRoutes = require("./routes/dashboard");
 const authMiddleware = require("./middlewares/auth"); // Importer le middleware d'authentification
+
 const catwaysRoutes = require("./routes/catways");
 const reservationsRoutes = require("./routes/reservations");
 const usersRoutes = require("./routes/users");
-const authLoginRoutes = require("./routes/authLogin");
-const authRegisterRoutes = require("./routes/authRegister");
 
 // Associer les routes à leurs chemins
+app.use((req, res, next) => {
+  console.log(`Requête reçue : ${req.method} ${req.url}`);
+  next();
+});
+
+app.use("/login", authLoginRoutes);
+app.use("/register", authRegisterRoutes);
+app.use("/dashboard", dashboardRoutes);
 app.use("/catways", authMiddleware, catwaysRoutes);
 app.use("/catways/:id/reservations", authMiddleware, reservationsRoutes); // Routes pour les réservations liées aux catways
 app.use("/users", authMiddleware, usersRoutes);
-app.use("/login", authLoginRoutes);
-app.use("/register", authRegisterRoutes);
 
 // Route pour la page d'accueil
 app.get("/", (req, res) => {
@@ -58,5 +59,5 @@ app.use((req, res) => {
 });
 
 // Démarrer le serveur
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Serveur lancé sur le port ${PORT}...`));
