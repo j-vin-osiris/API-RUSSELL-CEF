@@ -1,18 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
-    <title>Tableau de Bord</title>
+    <meta charset="UTF-8" />
+    <title><%= title %></title>
   </head>
   <body>
-    <h1>Tableau de Bord</h1>
-    <p>
-      Accédez aux opérations CRUD pour les catways, les réservations et les
-      utilisateurs.
-    </p>
+    <h1>Bienvenue sur le Tableau de Bord</h1>
+    <p>Bonjour, <%= user.username %> (<%= user.email %>)</p>
+    <p>Date : <%= new Date().toLocaleDateString('fr-FR') %></p>
+
+    <h2>Menu</h2>
     <ul>
-      <li><a href="/api/catways">Gestion des Catways</a></li>
-      <li><a href="/api/reservations">Gestion des Réservations</a></li>
-      <li><a href="/api/users">Gestion des Utilisateurs</a></li>
+      <li><a href="/catways">Gestion des Catways</a></li>
+      <li><a href="/reservations">Gestion des Réservations</a></li>
+      <li><a href="/users">Gestion des Utilisateurs</a></li>
+      <li><a href="/api/auth/logout">Se déconnecter</a></li>
     </ul>
   </body>
 </html>

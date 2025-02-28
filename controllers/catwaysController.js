@@ -3,10 +3,13 @@ const Catway = require("../models/Catway");
 // Récupérer tous les catways
 exports.getAllCatways = async (req, res) => {
   try {
-    const catways = await Catway.find();
-    res.render("catways/catways", { catways });
+    console.log("Requête reçue pour récupérer tous les catways"); // Étape 1 : Log au début de la méthode
+    const catways = await Catway.find({ catwayNumber: 1 }); // Récupération des catways
+    console.log("Catways récupérés depuis la base de données :", catways); // Étape 2 : Log des données récupérées
+
+    res.render("catways", { title: "Gestion des Catways", catways }); // Rendu de la vue avec les données
   } catch (err) {
-    console.error(err.message);
+    console.error("Erreur lors de la récupération des catways :", err.message); // Étape 3 : Log de l'erreur, si elle survient
     res.status(500).send("Erreur serveur");
   }
 };

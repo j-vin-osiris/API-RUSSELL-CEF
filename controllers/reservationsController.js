@@ -5,7 +5,7 @@ exports.getReservationsByCatway = async (req, res) => {
   try {
     const catwayNumber = req.params.id;
     const reservations = await Reservation.find({ catwayNumber });
-    res.render("reservations/reservations", { catwayNumber, reservations });
+    res.render("reservations", { catwayNumber, reservations });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Erreur serveur");
