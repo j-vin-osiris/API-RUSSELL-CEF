@@ -2,19 +2,52 @@
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/css/styles.css" />
     <title><%= title %></title>
   </head>
   <body>
+    <%- include('partials/menu') %>
+
     <h1>Bienvenue sur le Tableau de Bord</h1>
     <p>Bonjour</p>
     <p>Date du jour : <%= new Date().toLocaleDateString('fr-FR') %></p>
 
     <h2>Menu</h2>
-    <ul>
-      <li><a href="/catways">Gestion des Catways</a></li>
-      <li><a href="/reservations">Gestion des Réservations</a></li>
-      <li><a href="/users">Gestion des Utilisateurs</a></li>
-      <li><a href="/logout">Se déconnecter</a></li>
-    </ul>
+    <!-- Tableau des liens -->
+    <div class="table-container">
+      <table border="1">
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Actions</th>
+            <th>Navigation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Gestion des Catways</td>
+            <td>Ajouter, modifier ou supprimer des catways</td>
+            <td><a href="/catways" class="btn">Accéder aux Catways</a></td>
+          </tr>
+          <tr>
+            <td>Gestion des Réservations</td>
+            <td>Ajouter, modifier ou supprimer des réservations</td>
+            <td>
+              <a href="/reservations" class="btn">Accéder aux Réservations</a>
+            </td>
+          </tr>
+          <tr>
+            <td>Gestion des Utilisateurs</td>
+            <td>Ajouter, modifier ou supprimer des utilisateurs</td>
+            <td><a href="/users" class="btn">Accéder aux Utilisateurs</a></td>
+          </tr>
+          <tr>
+            <td>Se Déconnecter</td>
+            <td>Déconnexion de l'utilisateur</td>
+            <td><a href="/logout" class="btn">Se Déconnecter</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </body>
 </html>

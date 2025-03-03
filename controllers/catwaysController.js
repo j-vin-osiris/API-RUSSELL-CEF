@@ -5,7 +5,7 @@ exports.getAllCatways = async (req, res) => {
   try {
     const catways = await Catway.find(); // Récupération des catways
 
-    res.render("catways", { title: "Gestion des Catways", catways }); // Rendu de la vue avec les données
+    res.render("catways/catways", { title: "Gestion des Catways", catways }); // Rendu de la vue avec les données
   } catch (err) {
     console.error("Erreur lors de la récupération des catways :", err.message); // Étape 3 : Log de l'erreur, si elle survient
     res.status(500).send("Erreur serveur");
@@ -19,7 +19,7 @@ exports.getCatwayById = async (req, res) => {
     if (!catway) {
       return res.status(404).send("Catway introuvable");
     }
-    res.render("catway", { catway });
+    res.render("catways/catway", { catway });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Erreur serveur");
@@ -28,7 +28,7 @@ exports.getCatwayById = async (req, res) => {
 
 //Afficher le formulaire pour créer un nouveau catway
 exports.getAddCatwayPage = (req, res) => {
-  res.render("addCatway"); // Rendre la vue addCatway.ejs pour le formulaire
+  res.render("catways/addCatway"); // Rendre la vue addCatway.ejs pour le formulaire
 };
 
 exports.createCatway = async (req, res) => {
@@ -38,7 +38,7 @@ exports.createCatway = async (req, res) => {
     // Vérifier si un catway avec ce numéro existe déjà
     const existingCatway = await Catway.findOne({ catwayNumber });
     if (existingCatway) {
-      return res.render("addCatway", {
+      return res.render("catways/addCatway", {
         error:
           "Le numéro du catway existe déjà. Veuillez saisir un autre numéro.",
         catwayNumber: catwayNumber,
@@ -64,7 +64,7 @@ exports.getEditCatwayPage = async (req, res) => {
     if (!catway) {
       return res.status(404).send("Catway introuvable");
     }
-    res.render("editCatway", { catway }); // Rendre la vue editCatway.ejs avec les données du catway
+    res.render("catways/editCatway", { catway }); // Rendre la vue editCatway.ejs avec les données du catway
   } catch (err) {
     console.error("Erreur lors de la récupération du catway :", err.message);
     res.status(500).send("Erreur serveur");

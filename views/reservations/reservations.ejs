@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestion des Réservations</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <%- include('../partials/menu') %>
+    <h1>Gestion des Réservations</h1>
+
+    <!-- Lien pour ajouter une nouvelle réservation -->
+    <a href="/reservations/add" class="btn">Ajouter une nouvelle Réservation</a
+    ><br /><br />
+
+    <!-- Conteneur de tableau -->
+    <div class="table-container">
+      <!-- Table des Réservations existantes, s'il y en a -->
+      <% if (reservations && reservations.length > 0) { %>
+      <table>
+        <thead>
+          <tr>
+            <th>Catway Number</th>
+            <th>Client Name</th>
+            <th>Boat Name</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% reservations.forEach(reservation => { %>
+          <tr>
+            <td><%= reservation.catwayNumber %></td>
+            <td><%= reservation.clientName %></td>
+            <td><%= reservation.boatName %></td>
+            <td><%= reservation.startDate %></td>
+            <td><%= reservation.endDate %></td>
+            <td class="table-actions">
+              <a href="/reservations/<%= reservation._id %>/edit" class="btn"
+                >Mettre à jour</a
+              >
+              <form
+                action="/reservations/<%= reservation._id %>?_method=DELETE"
+                method="POST"
+                onsubmit="return confirmDeletion();"
+                style="display: inline"
+              >
+                <button type="submit" class="btn btn-delete">Supprimer</button>
+              </form>
+            </td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+      <% } else { %>
+      <p>Aucune réservation disponible pour le moment.</p>
+      <% } %>
+    </div>
+
+    <!-- Inclure le script de confirmation de suppression -->
+    <%- include('../partials/confirmationScript') %>
+  </body>
+</html>

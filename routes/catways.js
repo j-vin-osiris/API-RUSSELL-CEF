@@ -7,7 +7,7 @@ router.get("/", catwayController.getAllCatways);
 
 // Créer un nouveau catway
 router.get("/add", (req, res) => {
-  res.render("addCatway"); // Page pour le formulaire d'ajout
+  res.render("catways/addCatway"); // Page pour le formulaire d'ajout
 });
 router.post("/", catwayController.createCatway);
 
@@ -19,7 +19,7 @@ router.get("/:id/edit", catwayController.getEditCatwayPage);
 
 // Modifier un catway
 router.get("/:id/edit", (req, res) => {
-  res.render("editCatway"); // Page pour le formulaire d'édition
+  res.render("catways/editCatway"); // Page pour le formulaire d'édition
 });
 router.put("/:id", catwayController.updateCatway);
 
