@@ -1,0 +1,171 @@
+/* styles.css */
+
+/* Définir des variables de couleur pour une palette cohérente */
+:root {
+  --primary-color: #007bff;
+  --secondary-color: #0056b3;
+  --background-color: #f4f4f4;
+  --text-color: #333;
+  --white: #fff;
+}
+
+/* Styles généraux */
+body {
+  font-family: "Arial", sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 10px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--primary-color);
+}
+
+h1,
+p {
+  text-align: center;
+}
+
+/* Navigation */
+nav {
+  background-color: var(--primary-color);
+  padding: 10px;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+nav ul li {
+  display: inline;
+}
+
+nav ul li a {
+  color: var(--white);
+  text-decoration: none;
+  padding: 10px 20px;
+  display: inline-block;
+}
+
+nav ul li a:hover {
+  background-color: var(--secondary-color);
+}
+
+/* Styles pour les tableaux */
+
+table {
+  width: auto;
+  border-collapse: collapse;
+  margin: 20px 0;
+  background-color: var(--white);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  table-layout: auto;
+}
+
+table th,
+table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+  white-space: nowrap; /* Empêche les retours à la ligne automatiques */
+}
+
+table th {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+/* Button */
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: var(--white);
+  background-color: var(--primary-color);
+  text-decoration: none;
+  border-radius: 5px;
+  text-align: center;
+  width: 200px;
+}
+
+.btn:hover {
+  background-color: var(--secondary-color);
+}
+
+/* Styles pour les formulaires */
+.form-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: var(--white);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+form .form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+form .form-group label {
+  margin-bottom: 5px;
+}
+
+form .form-group input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+form button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--primary-color);
+  color: var(--white);
+  font-size: 16px;
+}
+
+form button:hover {
+  background-color: var(--secondary-color);
+}
+
+/* Styles pour les liens */
+a.btn {
+  display: inline-block;
+  margin-top: 10px;
+  text-decoration: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: var(--white);
+  background-color: var(--primary-color);
+  border-radius: 5px;
+  text-align: center;
+}
+
+a.btn:hover {
+  background-color: var(--secondary-color);
+}

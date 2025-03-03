@@ -2,7 +2,7 @@ const Reservation = require("../models/Reservation");
 
 // Afficher le formulaire pour créer une nouvelle réservation
 exports.getAddReservationPage = (req, res) => {
-  res.render("addReservation"); // Rendre la vue addReservation.ejs pour le formulaire
+  res.render("reservations/addReservation"); // Rendre la vue addReservation.ejs pour le formulaire
 };
 
 // Créer une nouvelle réservation
@@ -22,7 +22,7 @@ exports.createReservation = async (req, res) => {
     });
 
     if (conflictingReservation) {
-      return res.render("addReservation", {
+      return res.render("reservations/addReservation", {
         error:
           "Une réservation existe déjà pour ce catway pendant cette période. Veuillez choisir une autre période ou un autre catway.",
         catwayNumber: catwayNumber,
@@ -56,7 +56,7 @@ exports.createReservation = async (req, res) => {
 exports.getAllReservations = async (req, res) => {
   try {
     const reservations = await Reservation.find();
-    res.render("reservations", {
+    res.render("reservations/reservations", {
       title: "Gestion des Réservations",
       reservations,
     });
@@ -76,7 +76,7 @@ exports.getEditReservationPage = async (req, res) => {
     if (!reservation) {
       return res.status(404).send("Réservation introuvable");
     }
-    res.render("editReservation", { reservation }); // Rendre la vue editReservation.ejs avec les données de la réservation
+    res.render("reservations/editReservation", { reservation }); // Rendre la vue editReservation.ejs avec les données de la réservation
   } catch (err) {
     console.error(
       "Erreur lors de la récupération de la réservation :",
@@ -106,7 +106,7 @@ exports.updateReservation = async (req, res) => {
 
     if (conflictingReservation) {
       const reservation = await Reservation.findById(reservationId);
-      return res.render("editReservation", {
+      return res.render("reservations/editReservation", {
         error:
           "Une réservation existe déjà pour ce catway pendant cette période. Veuillez choisir une autre période ou un autre catway.",
         reservation: reservation,

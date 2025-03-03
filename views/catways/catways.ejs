@@ -3,25 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/styles.css" />
     <title>Gestion des Catways</title>
-    <style>
-      .btn {
-        display: inline-block;
-        padding: 10px 20px;
-        font-size: 16px;
-        margin: 10px 0;
-        color: #fff;
-        background-color: #007bff;
-        text-decoration: none;
-        border-radius: 5px;
-      }
-      .btn:hover {
-        background-color: #0056b3;
-      }
-    </style>
   </head>
   <body>
-    <%- include('partials/menu') %>
+    <%- include('../partials/menu') %>
 
     <h1>Gestion des Catways</h1>
 
@@ -33,7 +19,7 @@
 
     <!-- Table des catways existants, s'il y en a -->
     <% if (catways && catways.length > 0) { %>
-    <table border="1">
+    <table>
       <thead>
         <tr>
           <th>Numéro</th>
@@ -48,15 +34,17 @@
           <td><%= catway.catwayNumber %></td>
           <td><%= catway.catwayType %></td>
           <td><%= catway.catwayState %></td>
-          <td>
-            <a href="/catways/<%= catway.catwayNumber %>/edit">Mettre à jour</a>
-            |
+          <td class="table-actions">
+            <a href="/catways/<%= catway.catwayNumber %>/edit" class="btn"
+              >Mettre à jour</a
+            >
             <form
               action="/catways/<%= catway.catwayNumber %>?_method=DELETE"
               method="POST"
+              onsubmit="return confirmDeletion();"
               style="display: inline"
             >
-              <button type="submit">Supprimer</button>
+              <button type="submit" class="btn btn-delete">Supprimer</button>
             </form>
           </td>
         </tr>
@@ -66,5 +54,8 @@
     <% } else { %>
     <p>Aucun catway disponible pour le moment.</p>
     <% } %>
+
+    <!-- Script de confirmation de suppression -->
+    <%- include('../partials/confirmationScript') %>
   </body>
 </html>

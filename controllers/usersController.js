@@ -8,7 +8,7 @@ exports.createUser = async (req, res) => {
     // Vérifier si un utilisateur avec cet email existe déjà
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.render("addUser", {
+      return res.render("users/addUser", {
         error: "L'email existe déjà. Veuillez saisir un autre email.",
         userName: userName,
         email: email,
@@ -30,7 +30,7 @@ exports.createUser = async (req, res) => {
 exports.getAllUsers = async (req, res) => {
   try {
     const users = await User.find();
-    res.render("users", { title: "Gestion des Utilisateurs", users });
+    res.render("users/users", { title: "Gestion des Utilisateurs", users });
   } catch (err) {
     console.error(
       "Erreur lors de la récupération des utilisateurs :",
@@ -47,7 +47,7 @@ exports.getEditUserPage = async (req, res) => {
     if (!user) {
       return res.status(404).send("Utilisateur introuvable");
     }
-    res.render("editUser", { user }); // Rendre la vue editUser.ejs avec les données de l'utilisateur
+    res.render("users/editUser", { user }); // Rendre la vue editUser.ejs avec les données de l'utilisateur
   } catch (err) {
     console.error(
       "Erreur lors de la récupération de l'utilisateur :",

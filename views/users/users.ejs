@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gestion des Utilisateurs</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <%- include('../partials/menu') %>
+
+    <h1>Gestion des Utilisateurs</h1>
+    <p>Gérer les comptes utilisateurs de votre application.</p>
+
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>Nom d'utilisateur</th>
+            <th>Email</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% users.forEach(user => { %>
+          <tr>
+            <td><%= user.username %></td>
+            <td><%= user.email %></td>
+            <td class="table-actions">
+              <a href="/users/<%= user._id %>/edit" class="btn">Modifier</a>
+              <form
+                action="/users/<%= user._id %>?_method=DELETE"
+                method="POST"
+                onsubmit="return confirmDeletion();"
+                style="display: inline"
+              >
+                <button type="submit" class="btn btn-delete">Supprimer</button>
+              </form>
+            </td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Inclure le script de confirmation de suppression -->
+    <%- include('../partials/confirmationScript') %>
+  </body>
+</html>

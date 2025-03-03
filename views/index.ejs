@@ -1,18 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Port de Plaisance Russell</title>
+    <title>Accueil</title>
+    <link rel="stylesheet" href="/css/styles.css" />
   </head>
   <body>
+    <%- include('partials/menu') %>
+
     <h1>Bienvenue au Port de Plaisance Russell</h1>
     <p>
       Connectez-vous pour accéder à la gestion des catways et des réservations.
     </p>
-    <a href="/register">S'enregistrer</a>
-    <a href="/login">Se connecter</a>
-    <!-- Ajout du lien vers la documentation de l'API -->
-    <a href="/documentation">Documentation de l'API</a>
+
+    <h2>Menu</h2>
+    <!-- Tableau des liens -->
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Actions</th>
+            <th>Navigation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Se connecter</td>
+            <td>Accéder à votre compte</td>
+            <td><a href="/login" class="btn">Se connecter</a></td>
+          </tr>
+          <tr>
+            <td>S'enregistrer</td>
+            <td>Créer un nouveau compte</td>
+            <td><a href="/register" class="btn">S'enregistrer</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </body>
 </html>
