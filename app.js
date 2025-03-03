@@ -53,6 +53,17 @@ app.get("/", (req, res) => {
   res.render("index", { title: "Bienvenue au Port de Plaisance Russell" });
 });
 
+//Route pour la documentation de l'API
+app.get("/documentation", (req, res) => {
+  res.render("documentation");
+});
+
+// Route pour la déconnexion
+app.get("/logout", (req, res) => {
+  res.clearCookie("token");
+  res.redirect("/");
+});
+
 // Gérer les erreurs 404
 app.use((req, res) => {
   res.status(404).render("404", { title: "Page non trouvée" });
