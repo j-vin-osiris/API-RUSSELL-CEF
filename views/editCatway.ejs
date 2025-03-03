@@ -1,10 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Modifier le Catway</title>
+    <style>
+      .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        margin: 10px 0;
+        color: #fff;
+        background-color: #007bff;
+        text-decoration: none;
+        border-radius: 5px;
+      }
+      .btn:hover {
+        background-color: #0056b3;
+      }
+    </style>
   </head>
   <body>
     <h1>Modifier le Catway <%= catway.catwayNumber %></h1>
+
+    <!-- Bouton pour retourner au dashboard -->
+    <a href="/dashboard" class="btn">Retour au Dashboard</a><br /><br />
+
     <form
       action="/catways/<%= catway.catwayNumber %>?_method=PUT"
       method="POST"
@@ -17,7 +38,6 @@
         value="<%= catway.catwayState %>"
         required
       /><br /><br />
-
       <button type="submit">Mettre à jour</button>
     </form>
   </body>

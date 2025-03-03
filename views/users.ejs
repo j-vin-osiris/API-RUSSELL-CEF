@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gestion des Catways</title>
+    <title>Gestion des Utilisateurs</title>
     <style>
       .btn {
         display: inline-block;
@@ -21,36 +21,32 @@
     </style>
   </head>
   <body>
-    <h1>Gestion des Catways</h1>
+    <h1>Gestion des Utilisateurs</h1>
 
     <!-- Bouton pour retourner au dashboard -->
     <a href="/dashboard" class="btn">Retour au Dashboard</a><br /><br />
 
-    <!-- Lien pour accéder à la liste des catways -->
-    <a href="/catways/add" class="btn">Ajouter un nouveau Catway</a><br /><br />
-
-    <!-- Table des catways existants, s'il y en a -->
-    <% if (catways && catways.length > 0) { %>
+    <!-- Table des utilisateurs existants, s'il y en a -->
+    <% if (users && users.length > 0) { %>
     <table border="1">
       <thead>
         <tr>
-          <th>Numéro</th>
-          <th>Type</th>
-          <th>État</th>
+          <th>Nom</th>
+          <th>Email</th>
+          <th>Rôle</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <% catways.forEach(catway => { %>
+        <% users.forEach(user => { %>
         <tr>
-          <td><%= catway.catwayNumber %></td>
-          <td><%= catway.catwayType %></td>
-          <td><%= catway.catwayState %></td>
+          <td><%= user.userName %></td>
+          <td><%= user.email %></td>
+          <td><%= user.role %></td>
           <td>
-            <a href="/catways/<%= catway.catwayNumber %>/edit">Mettre à jour</a>
-            |
+            <a href="/users/<%= user._id %>/edit">Mettre à jour</a> |
             <form
-              action="/catways/<%= catway.catwayNumber %>?_method=DELETE"
+              action="/users/<%= user._id %>?_method=DELETE"
               method="POST"
               style="display: inline"
             >
@@ -62,7 +58,7 @@
       </tbody>
     </table>
     <% } else { %>
-    <p>Aucun catway disponible pour le moment.</p>
+    <p>Aucun utilisateur disponible pour le moment.</p>
     <% } %>
   </body>
 </html>

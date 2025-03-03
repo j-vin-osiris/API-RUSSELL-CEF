@@ -1,29 +1,23 @@
 const express = require("express");
 const router = express.Router();
-const auth = require("../middlewares/auth");
-const reservationController = require("../controllers/reservationsController");
+const reservationsController = require("../controllers/reservationsController");
 
-// Routes protégées
-router.get(
-  "/:catwayId/reservations",
-  auth,
-  reservationController.getReservationsByCatway
-);
+// Route pour afficher toutes les réservations
+router.get("/", reservationsController.getAllReservations);
 
-router.post(
-  "/:catwayId/reservations",
-  auth,
-  reservationController.createReservation
-);
-router.put(
-  "/:catwayId/reservations/:idReservation",
-  auth,
-  reservationController.updateReservation
-);
-router.delete(
-  "/:catwayId/reservations/:idReservation",
-  auth,
-  reservationController.deleteReservation
-);
+// Route pour afficher le formulaire d'ajout
+router.get("/add", reservationsController.getAddReservationPage);
+
+// Route pour créer une nouvelle réservation
+router.post("/", reservationsController.createReservation);
+
+// Route pour afficher le formulaire d'édition d'une réservation
+router.get("/:id/edit", reservationsController.getEditReservationPage);
+
+// Route pour mettre à jour une réservation
+router.put("/:id", reservationsController.updateReservation);
+
+// Route pour supprimer une réservation
+router.delete("/:id", reservationsController.deleteReservation);
 
 module.exports = router;

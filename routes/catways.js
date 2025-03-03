@@ -14,6 +14,9 @@ router.post("/", catwayController.createCatway);
 // Détails d'un catway spécifique
 router.get("/:id", catwayController.getCatwayById);
 
+// Route pour afficher le formulaire d'édition d'un catway
+router.get("/:id/edit", catwayController.getEditCatwayPage);
+
 // Modifier un catway
 router.get("/:id/edit", (req, res) => {
   res.render("editCatway"); // Page pour le formulaire d'édition
