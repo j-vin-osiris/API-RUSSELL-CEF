@@ -1,13 +1,20 @@
 const express = require("express");
 const router = express.Router();
-const auth = require("../middlewares/auth");
-const userController = require("../controllers/usersController");
+const usersController = require("../controllers/usersController");
 
-// Routes protégées
-router.get("/", auth, userController.getAllUsers);
-router.get("/:email", auth, userController.getUserByEmail);
-router.post("/", auth, userController.createUser);
-router.put("/:email", auth, userController.updateUser);
-router.delete("/:email", auth, userController.deleteUser);
+// Route pour afficher tous les utilisateurs
+router.get("/", usersController.getAllUsers);
+
+// Route pour créer un nouvel utilisateur
+router.post("/", usersController.createUser);
+
+// Route pour afficher le formulaire d'édition d'un utilisateur
+router.get("/:id/edit", usersController.getEditUserPage);
+
+// Route pour mettre à jour un utilisateur
+router.put("/:id", usersController.updateUser);
+
+// Route pour supprimer un utilisateur
+router.delete("/:id", usersController.deleteUser);
 
 module.exports = router;

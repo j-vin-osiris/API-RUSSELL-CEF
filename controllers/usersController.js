@@ -1,77 +1,95 @@
-const User = require("../models/User"); // Import du modèle User
+const User = require("../models/User");
+
+// Créer un nouvel utilisateur
+exports.createUser = async (req, res) => {
+  try {
+    const { userName, email, role } = req.body;
+
+    // Vérifier si un utilisateur avec cet email existe déjà
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.render("addUser", {
+        error: "L'email existe déjà. Veuillez saisir un autre email.",
+        userName: userName,
+        email: email,
+        role: role,
+      });
+    }
+
+    // Si aucun utilisateur avec cet email n'existe, créer un nouvel utilisateur
+    const newUser = new User({ userName, email, role });
+    await newUser.save();
+    res.redirect("/users");
+  } catch (err) {
+    console.error("Erreur lors de la création d'un utilisateur :", err.message);
+    res.status(500).send("Erreur serveur");
+  }
+};
 
 // Récupérer tous les utilisateurs
 exports.getAllUsers = async (req, res) => {
   try {
-    const users = await User.find(); // Récupération de tous les utilisateurs dans la base de données
-    res.json(users); // Retourne les utilisateurs en format JSON
+    const users = await User.find();
+    res.render("users", { title: "Gestion des Utilisateurs", users });
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Erreur serveur");
-  }
-};
-
-// Récupérer un utilisateur par son email
-exports.getUserByEmail = async (req, res) => {
-  try {
-    const user = await User.findOne({ email: req.params.email }); // Recherche d'un utilisateur par email
-    if (!user) return res.status(404).json({ msg: "Utilisateur non trouvé" });
-    res.json(user); // Retourne l'utilisateur trouvé
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Erreur serveur");
-  }
-};
-
-// Créer un nouvel utilisateur
-exports.createUser = async (req, res) => {
-  const { username, email, password } = req.body;
-
-  try {
-    const existingUser = await User.findOne({ email });
-    if (existingUser)
-      return res.status(400).json({ msg: "Email déjà utilisé" });
-
-    const newUser = new User({ username, email, password });
-    await newUser.save(); // Sauvegarde de l'utilisateur dans la base de données
-    res.status(201).json(newUser); // Retourne l'utilisateur créé
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Erreur serveur");
-  }
-};
-
-// Mettre à jour un utilisateur par son email
-exports.updateUser = async (req, res) => {
-  const { username, password } = req.body;
-
-  try {
-    const updatedUser = await User.findOneAndUpdate(
-      { email: req.params.email }, // Recherche par email
-      { username, password }, // Mise à jour des champs
-      { new: true } // Retourne l'utilisateur mis à jour
+    console.error(
+      "Erreur lors de la récupération des utilisateurs :",
+      err.message
     );
-
-    if (!updatedUser)
-      return res.status(404).json({ msg: "Utilisateur non trouvé" });
-    res.json(updatedUser); // Retourne les détails de l'utilisateur mis à jour
-  } catch (err) {
-    console.error(err.message);
     res.status(500).send("Erreur serveur");
   }
 };
 
-// Supprimer un utilisateur par son email
+// Récupérer un utilisateur spécifique pour la page d'édition
+exports.getEditUserPage = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).send("Utilisateur introuvable");
+    }
+    res.render("editUser", { user }); // Rendre la vue editUser.ejs avec les données de l'utilisateur
+  } catch (err) {
+    console.error(
+      "Erreur lors de la récupération de l'utilisateur :",
+      err.message
+    );
+    res.status(500).send("Erreur serveur");
+  }
+};
+
+// Mettre à jour un utilisateur
+exports.updateUser = async (req, res) => {
+  try {
+    const { userName, email, role } = req.body;
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      { userName, email, role },
+      { new: true }
+    );
+    if (!updatedUser) return res.status(404).send("Utilisateur introuvable");
+    res.redirect("/users");
+  } catch (err) {
+    console.error(
+      "Erreur lors de la mise à jour de l'utilisateur :",
+      err.message
+    );
+    res.status(500).send("Erreur serveur");
+  }
+};
+
+// Supprimer un utilisateur
 exports.deleteUser = async (req, res) => {
   try {
-    const deletedUser = await User.findOneAndDelete({
-      email: req.params.email,
-    }); // Suppression par email
-    if (!deletedUser)
-      return res.status(404).json({ msg: "Utilisateur non trouvé" });
-    res.json({ msg: "Utilisateur supprimé avec succès" });
+    const user = await User.findByIdAndDelete(req.params.id);
+    if (!user) {
+      return res.status(404).send("Utilisateur introuvable");
+    }
+    res.redirect("/users");
   } catch (err) {
-    console.error(err.message);
+    console.error(
+      "Erreur lors de la suppression de l'utilisateur :",
+      err.message
+    );
     res.status(500).send("Erreur serveur");
   }
 };

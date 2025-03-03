@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 exports.registerUser = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { userName, email, password, role } = req.body;
 
   try {
     const existingUser = await User.findOne({ email });
@@ -14,7 +14,12 @@ exports.registerUser = async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    const newUser = new User({ username, email, password: hashedPassword });
+    const newUser = new User({
+      userName,
+      email,
+      password: hashedPassword,
+      role,
+    });
     await newUser.save();
 
     // Génère un token JWT après inscription

@@ -1,34 +1,53 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Ajouter un Catway</title>
-  </head>
-  <body>
-    <h1>Ajouter un Catway</h1>
-    <form action="/catways" method="POST">
-      <label for="catwayNumber">Numéro :</label>
-      <input
-        type="number"
-        id="catwayNumber"
-        name="catwayNumber"
-        required
-      /><br /><br />
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajouter un Catway</title>
+  <style>
+    .alert {
+      color: red;
+      margin: 10px 0;
+    }
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 10px 0;
+      color: #fff;
+      background-color: #007bff;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    .btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Ajouter un nouveau Catway</h1>
 
-      <label for="catwayType">Type :</label>
-      <select id="catwayType" name="catwayType" required>
-        <option value="long">Long</option>
-        <option value="short">Short</option></select
-      ><br /><br />
+  <!-- Bouton pour retourner au dashboard -->
+  <a href="/dashboard" class="btn">Retour au Dashboard</a><br><br>
 
-      <label for="catwayState">État :</label>
-      <input
-        type="text"
-        id="catwayState"
-        name="catwayState"
-        required
-      /><br /><br />
+  <% if (typeof error !== 'undefined') { %>
+    <div class="alert"><%= error %></div>
+  <% } %>
 
-      <button type="submit">Créer</button>
-    </form>
-  </body>
+  <form action="/catways" method="POST">
+    <label for="catwayNumber">Numéro :</label>
+    <input type="number" id="catwayNumber" name="catwayNumber" value="<%= typeof catwayNumber !== 'undefined' ? catwayNumber : '' %>" required><br><br>
+
+    <label for="catwayType">Type :</label>
+    <select id="catwayType" name="catwayType" required>
+      <option value="long" <% if (typeof catwayType !== 'undefined' && catwayType === 'long') { %> selected <% } %>>Long</option>
+      <option value="short" <% if (typeof catwayType !== 'undefined' && catwayType === 'short') { %> selected <% } %>>Short</option>
+    </select><br><br>
+
+    <label for="catwayState">État :</label>
+    <input type="text" id="catwayState" name="catwayState" value="<%= typeof catwayState !== 'undefined' ? catwayState : '' %>" required><br><br>
+
+    <button type="submit">Créer</button>
+  </form>
+</body>
 </html>

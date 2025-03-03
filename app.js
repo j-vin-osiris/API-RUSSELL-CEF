@@ -45,7 +45,7 @@ app.use("/login", authLoginRoutes);
 app.use("/register", authRegisterRoutes);
 app.use("/dashboard", dashboardRoutes);
 app.use("/catways", authMiddleware, catwaysRoutes);
-app.use("/catways/:id/reservations", authMiddleware, reservationsRoutes); // Routes pour les réservations liées aux catways
+app.use("/reservations", authMiddleware, reservationsRoutes);
 app.use("/users", authMiddleware, usersRoutes);
 
 // Route pour la page d'accueil
