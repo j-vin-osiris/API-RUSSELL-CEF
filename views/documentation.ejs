@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Documentation de l'API</title>
+    <style>
+      .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        margin: 10px 0;
+        color: #fff;
+        background-color: #007bff;
+        text-decoration: none;
+        border-radius: 5px;
+      }
+      .btn:hover {
+        background-color: #0056b3;
+      }
+      pre {
+        background-color: #f4f4f4;
+        padding: 10px;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('partials/menu') %>
+
+    <h1>Documentation de l'API</h1>
+    <p>Voici les informations sur notre API :</p>
+
+    <h2>Endpoints</h2>
+    <ul>
+      <li>
+        <strong>GET /reservations</strong> : Récupérer toutes les réservations
+      </li>
+      <li>
+        <strong>POST /reservations</strong> : Créer une nouvelle réservation
+      </li>
+      <li>
+        <strong>GET /reservations/:id</strong> : Récupérer une réservation
+        spécifique
+      </li>
+      <li>
+        <strong>PUT /reservations/:id</strong> : Mettre à jour une réservation
+      </li>
+      <li>
+        <strong>DELETE /reservations/:id</strong> : Supprimer une réservation
+      </li>
+      <li><strong>GET /users</strong> : Récupérer tous les utilisateurs</li>
+      <li><strong>POST /users</strong> : Créer un nouvel utilisateur</li>
+      <li>
+        <strong>GET /users/:id</strong> : Récupérer un utilisateur spécifique
+      </li>
+      <li><strong>PUT /users/:id</strong> : Mettre à jour un utilisateur</li>
+      <li><strong>DELETE /users/:id</strong> : Supprimer un utilisateur</li>
+    </ul>
+
+    <h2>Exemples de requêtes</h2>
+    <h3>Récupérer toutes les réservations</h3>
+    <pre>
+    <code>
+      fetch('/reservations')
+        .then(response => response.json())
+        .then(data => console.log(data));
+    </code>
+  </pre>
+
+    <h3>Créer une nouvelle réservation</h3>
+    <pre>
+    <code>
+      fetch('/reservations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          catwayNumber: 1,
+          clientName: 'Thomas Martin',
+          boatName: 'Carolina',
+          startDate: '2024-05-21T06:00:00Z',
+          endDate: '2024-10-27T06:00:00Z'
+        })
+      });
+    </code>
+  </pre>
+
+    <h3>Récupérer une réservation spécifique</h3>
+    <pre>
+    <code>
+      fetch('/reservations/1')
+        .then(response => response.json())
+        .then(data => console.log(data));
+    </code>
+  </pre>
+
+    <h3>Mettre à jour une réservation</h3>
+    <pre>
+    <code>
+      fetch('/reservations/1', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          clientName: 'Thomas Martin',
+          boatName: 'Carolina',
+          startDate: '2024-06-01T06:00:00Z',
+          endDate: '2024-10-30T06:00:00Z'
+        })
+      });
+    </code>
+  </pre>
+
+    <h3>Supprimer une réservation</h3>
+    <pre>
+    <code>
+      fetch('/reservations/1', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+    </code>
+  </pre>
+
+    <h3>Récupérer tous les utilisateurs</h3>
+    <pre>
+    <code>
+      fetch('/users')
+        .then(response => response.json())
+        .then(data => console.log(data));
+    </code>
+  </pre>
+
+    <h3>Créer un nouvel utilisateur</h3>
+    <pre>
+    <code>
+      fetch('/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userName: 'Alice',
+          email: 'alice@example.com',
+          role: 'admin'
+        })
+      });
+    </code>
+  </pre>
+
+    <h3>Récupérer un utilisateur spécifique</h3>
+    <pre>
+    <code>
+      fetch('/users/1')
+        .then(response => response.json())
+        .then(data => console.log(data));
+    </code>
+  </pre>
+
+    <h3>Mettre à jour un utilisateur</h3>
+    <pre>
+    <code>
+      fetch('/users/1', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          userName: 'Alice',
+          email: 'alice@example.com',
+          role: 'user'
+        })
+      });
+    </code>
+  </pre>
+
+    <h3>Supprimer un utilisateur</h3>
+    <pre>
+    <code>
+      fetch('/users/1', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+    </code>
+  </pre>
+  </body>
+</html>
