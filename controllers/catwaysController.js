@@ -3,9 +3,7 @@ const Catway = require("../models/Catway");
 // Récupérer tous les catways
 exports.getAllCatways = async (req, res) => {
   try {
-    console.log("Requête reçue pour récupérer tous les catways"); // Étape 1 : Log au début de la méthode
-    const catways = await Catway.find({ catwayNumber: 1 }); // Récupération des catways
-    console.log("Catways récupérés depuis la base de données :", catways); // Étape 2 : Log des données récupérées
+    const catways = await Catway.find(); // Récupération des catways
 
     res.render("catways", { title: "Gestion des Catways", catways }); // Rendu de la vue avec les données
   } catch (err) {
@@ -21,48 +19,43 @@ exports.getCatwayById = async (req, res) => {
     if (!catway) {
       return res.status(404).send("Catway introuvable");
     }
-    res.render("catways/editCatway", { catway });
+    res.render("catway", { catway });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Erreur serveur");
   }
 };
 
+//Afficher le formulaire pour créer un nouveau catway
+exports.getAddCatwayPage = (req, res) => {
+  res.render("addCatway"); // Rendre la vue addCatway.ejs pour le formulaire
+};
+
 // Créer un nouveau catway
 exports.createCatway = async (req, res) => {
-  const { catwayNumber, catwayType, catwayState } = req.body;
-
   try {
-    const newCatway = new Catway({
-      catwayNumber,
-      catwayType,
-      catwayState,
-    });
-
+    const { catwayNumber, catwayType, catwayState } = req.body; // Récupérer les données du formulaire
+    const newCatway = new Catway({ catwayNumber, catwayType, catwayState });
     await newCatway.save();
-    res.redirect("/catways");
+    res.redirect("/catways"); // Rediriger vers la liste des catways après la création
   } catch (err) {
-    console.error(err.message);
+    console.error("Erreur lors de la création d'un catway :", err.message);
     res.status(500).send("Erreur serveur");
   }
 };
 
 // Mettre à jour un catway
 exports.updateCatway = async (req, res) => {
-  const { catwayState } = req.body;
-
   try {
+    const { catwayState } = req.body; // Récupère les données du formulaire
     const updatedCatway = await Catway.findOneAndUpdate(
       { catwayNumber: req.params.id },
       { catwayState },
       { new: true }
     );
-    if (!updatedCatway) {
-      return res.status(404).send("Catway introuvable");
-    }
-    res.redirect("/catways");
+    if (!updatedCatway) return res.status(404).send("Catway introuvable");
+    res.redirect("/catways"); // Redirige vers la liste des catways après la mise à jour
   } catch (err) {
-    console.error(err.message);
     res.status(500).send("Erreur serveur");
   }
 };

@@ -3,25 +3,53 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= title %></title>
+    <title>Gestion des Catways</title>
   </head>
   <body>
-    <h1><%= title %></h1>
+    <h1>Gestion des Catways</h1>
 
-    <a href="/catways/add">Ajouter un nouveau catway</a>
+    <!-- Lien pour ajouter un nouveau catway -->
+    <a href="/catways/add">Créer un nouveau Catway</a><br /><br />
 
+    <!-- Vérifie si des catways existent dans la base -->
     <% if (catways && catways.length > 0) { %>
-    <ul>
-      <% catways.forEach(catway => { %>
-      <li>
-        Numéro : <%= catway.catwayNumber %>, Type : <%= catway.catwayType %>,
-        État : <%= catway.catwayState %>
-        <a href="/catways/<%= catway.catwayNumber %>">Détails</a>
-      </li>
-      <% }); %>
-    </ul>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Numéro</th>
+          <th>Type</th>
+          <th>État</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% catways.forEach(catway => { %>
+        <tr>
+          <td><%= catway.catwayNumber %></td>
+          <td><%= catway.catwayType %></td>
+          <td><%= catway.catwayState %></td>
+          <td>
+            <!-- Lien pour afficher les détails -->
+            <a href="/catways/<%= catway.catwayNumber %>">Détails</a> |
+
+            <!-- Lien pour modifier -->
+            <a href="/catways/<%= catway.catwayNumber %>/edit">Modifier</a> |
+
+            <!-- Bouton pour supprimer -->
+            <form
+              action="/catways/<%= catway.catwayNumber %>?_method=DELETE"
+              method="POST"
+              style="display: inline"
+            >
+              <button type="submit">Supprimer</button>
+            </form>
+          </td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
     <% } else { %>
-    <p>Aucun catway disponible.</p>
+    <p>Aucun catway disponible pour le moment.</p>
     <% } %>
   </body>
 </html>
