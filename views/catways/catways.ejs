@@ -12,45 +12,47 @@
     <h1>Gestion des Catways</h1>
 
     <!-- Bouton pour retourner au dashboard -->
-    <a href="/dashboard" class="btn">Retour au Dashboard</a><br /><br />
+    <a href="/dashboard" class="btn">Retour au Tableau de bord</a><br /><br />
 
-    <!-- Lien pour accéder à la liste des catways -->
+    <!-- Lien pour ajouter des catways -->
     <a href="/catways/add" class="btn">Ajouter un nouveau Catway</a><br /><br />
 
     <!-- Table des catways existants, s'il y en a -->
     <% if (catways && catways.length > 0) { %>
-    <table>
-      <thead>
-        <tr>
-          <th>Numéro</th>
-          <th>Type</th>
-          <th>État</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% catways.forEach(catway => { %>
-        <tr>
-          <td><%= catway.catwayNumber %></td>
-          <td><%= catway.catwayType %></td>
-          <td><%= catway.catwayState %></td>
-          <td class="table-actions">
-            <a href="/catways/<%= catway.catwayNumber %>/edit" class="btn"
-              >Mettre à jour</a
-            >
-            <form
-              action="/catways/<%= catway.catwayNumber %>?_method=DELETE"
-              method="POST"
-              onsubmit="return confirmDeletion();"
-              style="display: inline"
-            >
-              <button type="submit" class="btn btn-delete">Supprimer</button>
-            </form>
-          </td>
-        </tr>
-        <% }); %>
-      </tbody>
-    </table>
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>Numéro</th>
+            <th>Type</th>
+            <th>État</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% catways.forEach(catway => { %>
+          <tr>
+            <td><%= catway.catwayNumber %></td>
+            <td><%= catway.catwayType %></td>
+            <td><%= catway.catwayState %></td>
+            <td class="table-actions">
+              <a href="/catways/<%= catway.catwayNumber %>/edit" class="btn"
+                >Mettre à jour</a
+              >
+              <form
+                action="/catways/<%= catway.catwayNumber %>?_method=DELETE"
+                method="POST"
+                onsubmit="return confirmDeletion();"
+                style="display: inline"
+              >
+                <button type="submit" class="btn">Supprimer</button>
+              </form>
+            </td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
     <% } else { %>
     <p>Aucun catway disponible pour le moment.</p>
     <% } %>

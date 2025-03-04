@@ -3,21 +3,21 @@ const User = require("../models/User");
 // Créer un nouvel utilisateur
 exports.createUser = async (req, res) => {
   try {
-    const { userName, email, role } = req.body;
+    const { username, email, role } = req.body;
 
     // Vérifier si un utilisateur avec cet email existe déjà
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.render("users/addUser", {
         error: "L'email existe déjà. Veuillez saisir un autre email.",
-        userName: userName,
+        username: username,
         email: email,
         role: role,
       });
     }
 
     // Si aucun utilisateur avec cet email n'existe, créer un nouvel utilisateur
-    const newUser = new User({ userName, email, role });
+    const newUser = new User({ username, email, role });
     await newUser.save();
     res.redirect("/users");
   } catch (err) {
@@ -60,10 +60,10 @@ exports.getEditUserPage = async (req, res) => {
 // Mettre à jour un utilisateur
 exports.updateUser = async (req, res) => {
   try {
-    const { userName, email, role } = req.body;
+    const { username, email, role } = req.body;
     const updatedUser = await User.findByIdAndUpdate(
       req.params.id,
-      { userName, email, role },
+      { username, email, role },
       { new: true }
     );
     if (!updatedUser) return res.status(404).send("Utilisateur introuvable");

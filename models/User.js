@@ -1,9 +1,7 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
 
-// Définir le schéma pour les utilisateurs
-const userSchema = new Schema({
-  userName: {
+const userSchema = new mongoose.Schema({
+  username: {
     type: String,
     required: true,
   },
@@ -19,10 +17,9 @@ const userSchema = new Schema({
   role: {
     type: String,
     required: true,
+    enum: ["user", "admin"], // Rôles disponibles
+    default: "user",
   },
 });
 
-// Créer le modèle pour les utilisateurs
-const User = mongoose.model("User", userSchema);
-
-module.exports = User;
+module.exports = mongoose.model("User", userSchema);
