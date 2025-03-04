@@ -10,12 +10,15 @@
     <%- include('../partials/menu') %>
     <h1>Gestion des Réservations</h1>
 
+    <!-- Bouton pour retourner au dashboard -->
+    <a href="/dashboard" class="btn">Retour au Tableau de bord</a><br /><br />
+
     <!-- Lien pour ajouter une nouvelle réservation -->
     <a href="/reservations/add" class="btn">Ajouter une nouvelle Réservation</a
     ><br /><br />
 
     <!-- Conteneur de tableau -->
-    <div class="table-container">
+    <div>
       <!-- Table des Réservations existantes, s'il y en a -->
       <% if (reservations && reservations.length > 0) { %>
       <table>
@@ -47,7 +50,7 @@
                 onsubmit="return confirmDeletion();"
                 style="display: inline"
               >
-                <button type="submit" class="btn btn-delete">Supprimer</button>
+                <button type="submit" class="btn">Supprimer</button>
               </form>
             </td>
           </tr>

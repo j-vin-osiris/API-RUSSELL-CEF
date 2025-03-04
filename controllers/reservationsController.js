@@ -38,8 +38,8 @@ exports.createReservation = async (req, res) => {
       catwayNumber,
       clientName,
       boatName,
-      startDate,
-      endDate,
+      startDate: start,
+      endDate: end,
     });
     await newReservation.save();
     res.redirect("/reservations");
@@ -116,8 +116,8 @@ exports.updateReservation = async (req, res) => {
     // Mettre à jour la réservation
     const updatedReservation = await Reservation.findByIdAndUpdate(
       reservationId,
-      { catwayNumber, clientName, boatName, startDate, endDate },
-      { new: true }
+      { catwayNumber, clientName, boatName, startDate: start, endDate: end },
+      { new: true, runValidators: true }
     );
     if (!updatedReservation)
       return res.status(404).send("Réservation introuvable");

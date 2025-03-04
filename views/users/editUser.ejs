@@ -1,53 +1,40 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/css/styles.css" />
-    <title>Modifier l'Utilisateur</title>
-  </head>
-  <body>
-    <%- include('../partials/menu') %>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modifier un Utilisateur</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <%- include('../partials/menu') %>
 
-    <h1>Modifier l'Utilisateur <%= user.userName %></h1>
-
-    <!-- Bouton pour retourner à la gestion des utilisateurs -->
-    <a href="/users" class="btn">Retour à la Gestion des Utilisateurs</a
-    ><br /><br />
-
-    <% if (typeof error !== 'undefined') { %>
-    <div class="alert"><%= error %></div>
-    <% } %>
-
+  <div class="form-container">
+    <h1>Modifier un Utilisateur</h1>
+    
     <form action="/users/<%= user._id %>?_method=PUT" method="POST">
-      <label for="userName">Nom :</label>
-      <input
-        type="text"
-        id="userName"
-        name="userName"
-        value="<%= user.userName %>"
-        required
-      /><br /><br />
-
-      <label for="email">Email :</label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        value="<%= user.email %>"
-        required
-      /><br /><br />
-
-      <label for="role">Rôle :</label>
-      <input
-        type="text"
-        id="role"
-        name="role"
-        value="<%= user.role %>"
-        required
-      /><br /><br />
-
+      <div class="form-group">
+        <label for="username">Nom d'utilisateur :</label>
+        <input type="text" id="username" name="username" value="<%= user.username %>" required>
+      </div>
+      <div class="form-group">
+        <label for="role">Rôle :</label>
+        <select id="role" name="role" required>
+          <option value="user" <%= user.role === 'user' ? 'selected' : '' %>>Utilisateur</option>
+          <option value="admin" <%= user.role === 'admin' ? 'selected' : '' %>>Administrateur</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="email">Adresse email :</label>
+        <input type="email" id="email" name="email" value="<%= user.email %>" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Mot de passe :</label>
+        <input type="password" id="password" name="password">
+        <small class="form-text">Laisser vide pour ne pas changer le mot de passe.</small>
+      </div>
       <button type="submit" class="btn">Mettre à jour</button>
     </form>
-  </body>
+  </div>
+</body>
 </html>
