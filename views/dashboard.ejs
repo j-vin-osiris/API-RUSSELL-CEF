@@ -9,7 +9,7 @@
     <%- include('partials/menu') %>
 
     <h1>Bienvenue sur le Tableau de Bord</h1>
-    <p>Bonjour</p>
+    <p>Bonjour <%= user.username %> !</p>
     <p>Date du jour : <%= new Date().toLocaleDateString('fr-FR') %></p>
 
     <h2>Menu</h2>
